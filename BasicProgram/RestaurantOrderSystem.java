@@ -1,3 +1,6 @@
+package BasicProgram;
+
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -5,59 +8,59 @@ import java.util.Scanner;
 public class RestaurantOrderSystem {
 
     public static void main(String[] args) {
-        // 菜单
+        // Food Menu
         Map<String, Double> menu = new HashMap<>();
-        menu.put("汉堡", 5.99);
-        menu.put("披萨", 8.99);
-        menu.put("沙拉", 3.99);
-        menu.put("饮料", 1.99);
+        menu.put("Burger", 5.99);
+        menu.put("Pizza", 8.99);
+        menu.put("Salad", 3.99);
+        menu.put("Coke", 1.99);
 
-        // 创建一个 Scanner 对象来接收用户输入
+        // Input... Use Scanner
         Scanner scanner = new Scanner(System.in);
 
-        // 用户点餐
+        // Order Food
         Map<String, Integer> order = new HashMap<>();
         boolean continueOrdering = true;
 
         while (continueOrdering) {
-            System.out.println("菜单:");
+            System.out.println("List of Foods:");
             for (String item : menu.keySet()) {
-                System.out.println(item + ": $" + menu.get(item));
+                System.out.println(item + ": RM" + menu.get(item));
             }
 
-            System.out.print("请输入您要点的食物 (输入 '完成' 结束点餐): ");
+            System.out.print("Please Enter Your Order (Enter 'Done' to Complete Your Order): ");
             String foodItem = scanner.nextLine();
 
-            if (foodItem.equalsIgnoreCase("完成")) {
+            if (foodItem.equalsIgnoreCase("Done")) {
                 continueOrdering = false;
             } else if (menu.containsKey(foodItem)) {
-                System.out.print("请输入数量: ");
+                System.out.print("Quantity: ");
                 int quantity = scanner.nextInt();
-                scanner.nextLine(); // 消耗掉输入缓冲区中的换行符
+                scanner.nextLine();
 
                 order.put(foodItem, quantity);
             } else {
-                System.out.println("抱歉，我们没有这道菜，请重新选择。");
+                System.out.println("Sorry, Invalid Option, Please Choose Again");
             }
         }
 
-        // 计算总价格
+        // Total Price
         double total = calculateTotal(menu, order);
 
-        // 打印订单和总价格
-        System.out.println("\n您的订单:");
+        // Print Total Price
+        System.out.println("\nYour Order:");
         for (String item : order.keySet()) {
             int quantity = order.get(item);
             double price = menu.get(item);
-            System.out.println(item + " x " + quantity + ": $" + (quantity * price));
+            System.out.println(item + " x " + quantity + ": RM" + (quantity * price));
         }
-        System.out.println("总价格: $" + total);
+        System.out.println("Total Price: RM" + total);
 
-        // 关闭 Scanner 对象，释放资源
+        // Release Resources
         scanner.close();
     }
 
-    // 计算总价格
+    // Calculate Total Price
     private static double calculateTotal(Map<String, Double> menu, Map<String, Integer> order) {
         double total = 0;
 
@@ -69,4 +72,5 @@ public class RestaurantOrderSystem {
 
         return total;
     }
+
 }
